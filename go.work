@@ -1,1 +1,11 @@
 go 1.20
+
+use (
+	./errorx
+	./gormx
+	./helper
+	./i18n
+	./logger
+	./redisx
+	./response
+)
