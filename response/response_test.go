@@ -17,7 +17,7 @@ func TestRes(t *testing.T) {
 	i18n.LoadLangPack(langPack1)
 	errorx.CodePrefix = 100
 
-	e := errorx.New(200000)
+	e := errorx.New("", 200000)
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {

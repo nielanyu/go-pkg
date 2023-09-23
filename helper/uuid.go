@@ -33,7 +33,7 @@ func (UUID) GetUniqueKey() (ID string, err error) {
 		times++
 		if times > 100 {
 			fmt.Println("GetUniqueKey err,", "GetUniqueKey,retry:"+strconv.Itoa(times))
-			return "", errorx.New(100000, "获取唯一键失败")
+			return "", errorx.New("获取唯一键失败", 100000)
 		}
 
 		// 获取纳秒
