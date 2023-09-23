@@ -31,23 +31,21 @@ func (e *Error) Error() string {
 	return fmt.Sprintf("code: %d ;position: %s %s", e.Code, e.Position, cause)
 }
 
-//New 创建异常附带自定义错误msg
-func New(code int64, msg ...string) error {
+// New 创建异常附带自定义错误msg
+func New(msg string, code int64) error {
 	code = CodePrefix*1000000 + code
 	e := &Error{
 		Cause: ErrEmpty,
 	}
 
 	e.Code = code
-	if len(msg) > 0 {
-		e.Cause = errors.New(msg[0])
-	}
+	e.Cause = errors.New(msg)
 	e.caller(1)
 	return e
 }
 
-//NewWithMsg 返回自定义翻译msg
-func NewWithMsg(code int64, msg string) error {
+// NewWithMsg 返回自定义翻译msg
+func NewWithMsg(msg string, code int64) error {
 	code = CodePrefix*1000000 + code
 	e := &Error{
 		Cause: ErrEmpty,
@@ -58,7 +56,7 @@ func NewWithMsg(code int64, msg string) error {
 	return e
 }
 
-//Caller 获取异常抛出的位置
+// Caller 获取异常抛出的位置
 func (e *Error) caller(skip int) {
 	_, file, line, ok := runtime.Caller(skip + 1)
 	if !ok {

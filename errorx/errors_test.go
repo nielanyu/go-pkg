@@ -6,6 +6,6 @@ import (
 )
 
 func TestNewException(t *testing.T) {
-	err := New(101, "error error!")
+	err := New("error error!", -1)
 	fmt.Println(err)
 }
