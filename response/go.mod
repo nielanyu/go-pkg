@@ -4,9 +4,9 @@ go 1.20
 
 require (
 	github.com/gin-gonic/gin v1.9.1
-	github.com/nielanyu/go-pkg/errorx v0.0.0-20230923185213-4b238d46d2d8
-	github.com/nielanyu/go-pkg/i18n v0.0.0-20230923185213-4b238d46d2d8
-	github.com/nielanyu/go-pkg/logger v0.0.0-20230923185213-4b238d46d2d8
+	github.com/nielanyu/go-pkg/errorx v0.0.0-20230926170900-436cfadc215d
+	github.com/nielanyu/go-pkg/i18n v0.0.0-20230926170900-436cfadc215d
+	github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d
 )
 
 require (

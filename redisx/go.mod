@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/nielanyu/go-pkg/logger v0.0.0-20230615141501-4cc9e369afd2
+	github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d
 )
 
 require (

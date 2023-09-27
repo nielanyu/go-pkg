@@ -52,8 +52,8 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd h1:TRLaZ9cD/w
 github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
 github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9Gz0M=
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
-github.com/nielanyu/go-pkg/logger v0.0.0-20230615141501-4cc9e369afd2 h1:JoNsZ7U4FdS+660jSVXNqK+LKvsV+JB9YAS7sCTJwsI=
-github.com/nielanyu/go-pkg/logger v0.0.0-20230615141501-4cc9e369afd2/go.mod h1:+5DVrkYui8NRVGUs+X0oDcz8lKsUrx7EwlebqiyLVgw=
+github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d h1:0DVFc0AmQLiEACEbvZ1L1siOwqB1XPcfqLlUazYTv04=
+github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d/go.mod h1:+5DVrkYui8NRVGUs+X0oDcz8lKsUrx7EwlebqiyLVgw=
 github.com/pelletier/go-toml/v2 v2.0.8 h1:0ctb6s9mE31h0/lhu+J6OPmVeDxJn+kYnJc2jZR9tGQ=
 github.com/pelletier/go-toml/v2 v2.0.8/go.mod h1:vuYfssBdrU2XDZ9bYydBu6t+6a6PYNcZljzZR9VXg+4=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=

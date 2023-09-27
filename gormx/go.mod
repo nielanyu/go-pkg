@@ -3,7 +3,7 @@ module github.com/nielanyu/go-pkg/gormx
 go 1.20
 
 require (
-	github.com/nielanyu/go-pkg/logger v0.0.0-20230615141501-4cc9e369afd2
+	github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d
 	gorm.io/driver/mysql v1.5.1
 	gorm.io/gorm v1.25.1
 )

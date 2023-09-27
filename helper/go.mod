@@ -7,9 +7,9 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/go-gomail/gomail v0.0.0-20160411212932-81ebce5c23df
 	github.com/lionsoul2014/ip2region v2.2.0-release+incompatible
-	github.com/nielanyu/go-pkg/errorx v0.0.0-20230615141843-2367b9242118
-	github.com/nielanyu/go-pkg/logger v0.0.0-20230615141843-2367b9242118
-	github.com/nielanyu/go-pkg/redisx v0.0.0-20230615141843-2367b9242118
+	github.com/nielanyu/go-pkg/errorx v0.0.0-20230926170900-436cfadc215d
+	github.com/nielanyu/go-pkg/logger v0.0.0-20230926170900-436cfadc215d
+	github.com/nielanyu/go-pkg/redisx v0.0.0-20230927145935-dd9bd500300e
 	github.com/shirou/gopsutil v3.21.11+incompatible
 	github.com/sideshow/apns2 v0.23.0
 	github.com/syyongx/php2go v0.9.5
