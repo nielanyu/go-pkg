@@ -47,10 +47,10 @@ func New(cfg Config) (*gorm.DB, error) {
 	newLogger := NewLogger(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer（日志输出的目标，前缀和日志包含的内容——译者注）
 		glogger.Config{
-			SlowThreshold:             time.Second,  // 慢 SQL 阈值
-			LogLevel:                  glogger.Info, // 日志级别
-			IgnoreRecordNotFoundError: true,         // 忽略ErrRecordNotFound（记录未找到）错误
-			Colorful:                  false,        // 禁用彩色打印
+			SlowThreshold:             time.Second,   // 慢 SQL 阈值
+			LogLevel:                  glogger.Error, // 日志级别
+			IgnoreRecordNotFoundError: true,          // 忽略ErrRecordNotFound（记录未找到）错误
+			Colorful:                  false,         // 禁用彩色打印
 		},
 	)
 
