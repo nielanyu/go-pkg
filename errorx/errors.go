@@ -1,67 +1,39 @@
 package errorx
 
 import (
-	"fmt"
-	"runtime"
-
-	"github.com/pkg/errors"
+	"strconv"
 )
 
-var _ error = (*Error)(nil)
-
-// ErrEmpty 空错误
-var ErrEmpty = errors.New("")
-
-// CodePrefix 返回码前缀
-var CodePrefix int64
-
-// Error 自定义错误信息
+// 自定义Error，并实现Error()方法
 type Error struct {
-	Code     int64
-	Msg      string //自定义翻译信息
-	Position string
-	Cause    error //存储错误信息堆栈
+	Code      int    `json:"code"`
+	Msg       string `json:"msg"`
+	ExtraCode *int   `json:"extra_code"`
 }
 
-func (e *Error) Error() string {
-	var cause string
-	if e.Cause != ErrEmpty {
-		cause = fmt.Sprintf(";err: %s", e.Cause.Error())
+// Error 打印错误信息
+func (e Error) Error() string {
+	if e.ExtraCode != nil {
+		return e.Msg + "-" + strconv.Itoa(*e.ExtraCode)
 	}
-	return fmt.Sprintf("code: %d ;position: %s %s", e.Code, e.Position, cause)
+	return e.Msg
 }
 
-// New 创建异常附带自定义错误msg
-func New(msg string, code int64) error {
-	code = CodePrefix*1000000 + code
-	e := &Error{
-		Cause: ErrEmpty,
-	}
-
-	e.Code = code
-	e.Cause = errors.New(msg)
-	e.caller(1)
-	return e
-}
-
-// NewWithMsg 返回自定义翻译msg
-func NewWithMsg(msg string, code int64) error {
-	code = CodePrefix*1000000 + code
-	e := &Error{
-		Cause: ErrEmpty,
-	}
-	e.Code = code
+// New 实例化错误
+func New(msg string, code ...int) Error {
+	var e Error
 	e.Msg = msg
-	e.caller(1)
-	return e
-}
-
-// Caller 获取异常抛出的位置
-func (e *Error) caller(skip int) {
-	_, file, line, ok := runtime.Caller(skip + 1)
-	if !ok {
-		file = "???"
-		line = 0
+	// 错误码
+	if len(code) == 1 {
+		e.Code = code[0]
+		// 额外的错误码
+	} else if len(code) == 2 {
+		e.Code = code[0]
+		e.ExtraCode = &code[1]
+		// 默认的系统错误
+	} else {
+		e.Code = -1
 	}
-	e.Position = fmt.Sprintf("%s:%d", file, line)
+	// 返回错误
+	return e
 }
