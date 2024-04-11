@@ -2,82 +2,46 @@ package response
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/nielanyu/go-pkg/errorx"
 	"github.com/nielanyu/go-pkg/i18n"
-	"github.com/nielanyu/go-pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )
 
-type res struct {
-	Code int64
-	Msg  string
-	Data interface{}
-}
-
 // JSON http json格式response响应
-func JSON(c *gin.Context, v interface{}, err error) {
-	spanCtx := logger.Start(c.Request.Context(), "ResponseJson")
-	defer logger.End(spanCtx)
-
-	lang := c.GetHeader("Accept-Language")
-
-	r := &res{
-		Code: 0,
-		Msg:  "",
-		Data: nil,
+func JSON(ctx *gin.Context, v interface{}, e error) {
+	lang := strings.Split(ctx.GetHeader("Accept-Language"), ",")[0]
+	// 正常的返回
+	if e == nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "",
+			"data": v,
+		})
 	}
-	if err == nil {
-		r.Code = 0
-		r.Msg = i18n.T(lang, "success")
-		if v != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": r.Code,
-				"msg":  r.Msg,
-				"data": v,
-			})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"code": r.Code,
-			"msg":  r.Msg,
-		})
-	} else {
-		var m string
-		iErr, ok := err.(*errorx.Error)
+	// 错误返回
+	if e != nil {
+		errorx, ok := e.(errorx.Error)
+		// 自定义错误返回
 		if ok {
-			r.Code = iErr.Code
-			m = iErr.Msg
-		} else {
-			r.Code = 100000
-		}
-		//日志记录
-		if m == "" {
-			// 判断错误码类型
-			// 屏蔽系统异常错误信息
-			if r.Code%1000000 < 200000 {
-				r.Msg = i18n.T(lang, 100000)
-			} else {
-				r.Msg = i18n.T(lang, int(r.Code%1000000))
+			msg := i18n.T(lang, errorx.Code)
+			if msg == "" {
+				msg = e.Error()
 			}
-		} else {
-			r.Msg = m
-		}
-		logger.Error(spanCtx, "response error", logger.Int64("code", r.Code), logger.String("msg", r.Msg))
-
-		if v != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": r.Code,
-				"msg":  r.Msg,
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": errorx.Code,
+				"msg":  msg,
 				"data": v,
 			})
-			return
+		} else {
+			// 系统错误
+			ctx.JSON(http.StatusOK, gin.H{
+				"code": -1,
+				"msg":  e.Error(),
+				"data": v,
+			})
 		}
-
-		c.JSON(http.StatusOK, gin.H{
-			"code": r.Code,
-			"msg":  r.Msg,
-		})
 	}
 }
