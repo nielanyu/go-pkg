@@ -9,7 +9,6 @@ import (
 	"time"
 
 	glogger "gorm.io/gorm/logger"
-	"gorm.io/gorm/utils"
 
 	"github.com/nielanyu/go-pkg/logger"
 )
@@ -89,7 +88,7 @@ func (l *mylogger) LogMode(level glogger.LogLevel) glogger.Interface {
 func (l mylogger) Info(ctx context.Context, msg string, data ...interface{}) {
 	if l.LogLevel >= glogger.Info {
 		if LocalDebug {
-			l.Printf(l.infoStr+msg, append([]interface{}{utils.FileWithLineNum()}, data...)...)
+			l.Printf(l.infoStr+msg, append([]interface{}{FileWithLineNum()}, data...)...)
 		} else {
 			var strs []string
 			for _, s := range data {
@@ -97,7 +96,7 @@ func (l mylogger) Info(ctx context.Context, msg string, data ...interface{}) {
 					strs = append(strs, str)
 				}
 			}
-			logger.Info(ctx, msg, logger.String("line", utils.FileWithLineNum()), logger.StringSlice("detail", strs))
+			logger.Info(ctx, msg, logger.String("line", FileWithLineNum()), logger.StringSlice("detail", strs))
 		}
 	}
 }
@@ -106,7 +105,7 @@ func (l mylogger) Info(ctx context.Context, msg string, data ...interface{}) {
 func (l mylogger) Warn(ctx context.Context, msg string, data ...interface{}) {
 	if l.LogLevel >= glogger.Warn {
 		if LocalDebug {
-			l.Printf(l.warnStr+msg, append([]interface{}{utils.FileWithLineNum()}, data...)...)
+			l.Printf(l.warnStr+msg, append([]interface{}{FileWithLineNum()}, data...)...)
 		} else {
 			var strs []string
 			for _, s := range data {
@@ -114,7 +113,7 @@ func (l mylogger) Warn(ctx context.Context, msg string, data ...interface{}) {
 					strs = append(strs, str)
 				}
 			}
-			logger.Info(ctx, msg, logger.String("line", utils.FileWithLineNum()), logger.StringSlice("detail", strs))
+			logger.Info(ctx, msg, logger.String("line", FileWithLineNum()), logger.StringSlice("detail", strs))
 		}
 	}
 }
@@ -123,7 +122,7 @@ func (l mylogger) Warn(ctx context.Context, msg string, data ...interface{}) {
 func (l mylogger) Error(ctx context.Context, msg string, data ...interface{}) {
 	if l.LogLevel >= glogger.Error {
 		if LocalDebug {
-			l.Printf(l.errStr+msg, append([]interface{}{utils.FileWithLineNum()}, data...)...)
+			l.Printf(l.errStr+msg, append([]interface{}{FileWithLineNum()}, data...)...)
 		} else {
 			var strs []string
 			for _, s := range data {
@@ -131,7 +130,7 @@ func (l mylogger) Error(ctx context.Context, msg string, data ...interface{}) {
 					strs = append(strs, str)
 				}
 			}
-			logger.Info(ctx, msg, logger.String("line", utils.FileWithLineNum()), logger.StringSlice("detail", strs))
+			logger.Info(ctx, msg, logger.String("line", FileWithLineNum()), logger.StringSlice("detail", strs))
 		}
 	}
 }
@@ -149,24 +148,24 @@ func (l mylogger) Trace(ctx context.Context, begin time.Time, fc func() (string,
 		sql = removeEscapeCharacter(sql)
 		if rows == -1 {
 			if LocalDebug {
-				l.Printf(l.traceErrStr, utils.FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, "-", sql)
+				l.Printf(l.traceErrStr, FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, "-", sql)
 			} else {
 				logger.Error(ctx,
 					"sql error",
 					logger.String("err", err.Error()),
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.String("rows affected", "-"),
 					logger.String("sql", sql))
 			}
 		} else {
 			if LocalDebug {
-				l.Printf(l.traceErrStr, utils.FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, rows, sql)
+				l.Printf(l.traceErrStr, FileWithLineNum(), err, float64(elapsed.Nanoseconds())/1e6, rows, sql)
 			} else {
 				logger.Error(ctx,
 					"sql error",
 					logger.String("err", err.Error()),
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.Int64("rows affected", rows),
 					logger.String("sql", sql))
@@ -178,24 +177,24 @@ func (l mylogger) Trace(ctx context.Context, begin time.Time, fc func() (string,
 		slowLog := fmt.Sprintf("SLOW SQL >= %v", l.SlowThreshold)
 		if rows == -1 {
 			if LocalDebug {
-				l.Printf(l.traceWarnStr, utils.FileWithLineNum(), slowLog, float64(elapsed.Nanoseconds())/1e6, "-", sql)
+				l.Printf(l.traceWarnStr, FileWithLineNum(), slowLog, float64(elapsed.Nanoseconds())/1e6, "-", sql)
 			} else {
 				logger.Warn(ctx,
 					"sql warn",
 					logger.String("warn", slowLog),
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.String("rows affected", "-"),
 					logger.String("sql", sql))
 			}
 		} else {
 			if LocalDebug {
-				l.Printf(l.traceWarnStr, utils.FileWithLineNum(), slowLog, float64(elapsed.Nanoseconds())/1e6, rows, sql)
+				l.Printf(l.traceWarnStr, FileWithLineNum(), slowLog, float64(elapsed.Nanoseconds())/1e6, rows, sql)
 			} else {
 				logger.Warn(ctx,
 					"sql warn",
 					logger.String("warn", slowLog),
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.Int64("rows affected", rows),
 					logger.String("sql", sql))
@@ -206,22 +205,22 @@ func (l mylogger) Trace(ctx context.Context, begin time.Time, fc func() (string,
 		sql = removeEscapeCharacter(sql)
 		if rows == -1 {
 			if LocalDebug {
-				l.Printf(l.traceStr, utils.FileWithLineNum(), float64(elapsed.Nanoseconds())/1e6, "-", sql)
+				l.Printf(l.traceStr, FileWithLineNum(), float64(elapsed.Nanoseconds())/1e6, "-", sql)
 			} else {
 				logger.Info(ctx,
 					"sql info",
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.String("rows affected", "-"),
 					logger.String("sql", sql))
 			}
 		} else {
 			if LocalDebug {
-				l.Printf(l.traceStr, utils.FileWithLineNum(), float64(elapsed.Nanoseconds())/1e6, rows, sql)
+				l.Printf(l.traceStr, FileWithLineNum(), float64(elapsed.Nanoseconds())/1e6, rows, sql)
 			} else {
 				logger.Info(ctx,
 					"sql info",
-					logger.String("line", utils.FileWithLineNum()),
+					logger.String("line", FileWithLineNum()),
 					logger.Float64("elapsed[ms]", float64(elapsed.Nanoseconds())/1e6),
 					logger.Int64("rows affected", rows),
 					logger.String("sql", sql))
